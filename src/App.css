@@ -1,6 +1,6 @@
 #root {
   width: 100%;
-  min-width: 10svh;
+  min-height: 10svh;
   display: flex;
   flex-direction: column;
 }
