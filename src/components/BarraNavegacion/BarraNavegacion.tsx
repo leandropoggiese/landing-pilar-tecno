@@ -15,11 +15,11 @@ const BarraNavegacion = () => {
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="navbar-principal" />
                 <Navbar.Collapse id="navbar-principal">
-                    <nav className="ms-auto gap-lg-3">
+                    <Nav className="ms-auto gap-lg-3">
                         <Nav.Link href="#inicio"> Inicio </Nav.Link>
                         <Nav.Link href="#cursos"> Cursos </Nav.Link>
                         <Nav.Link href="contacto"> Contacto </Nav.Link>
-                    </nav>
+                    </Nav>
                 </Navbar.Collapse>
             
         </Container>
