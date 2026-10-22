@@ -1,12 +1,14 @@
 import {useState, useEffect} from "react";
-import {Card , Row , Col, Badge} from "react-bootstrap";
-import {obtenerProductos} from "../../services/productoService";
-import type {Producto} from "../../types/producto";
+import {Card , Row , Col, Badge, Button} from "react-bootstrap";
+import {crearProducto, obtenerProductos} from "../../services/productoService";
+import type {Producto, ProductoFormulario} from "../../types/producto";
+import ModalProducto from "../ModalProducto/ModalProducto";
 
 const ListaProductos = () => {
     const [datos, setDatos] = useState<Producto[]>([]);
     const [cargando, setCargando] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [MostrarModal, setMostrarModal] = useState(false);
 
     useEffect(() => {
         obtenerProductos()
@@ -15,10 +17,24 @@ const ListaProductos = () => {
         .finally (() => setCargando(false));
     }, []);
 
+    const agregarProducto = async (datos: ProductoFormulario) =>{
+      const nuevo = await crearProducto(datos);
+      setDatos((anteriores) => [...anteriores, nuevo]);
+      setMostrarModal(false)
+    };
 
     return (
    <>
-      <h2 className="mb-3">Productos</h2>
+      <div className="d-flex justify-content-between align-items-center mb-3">
+       <h2 className="mb-3">Productos</h2>
+       <Button onClick={() => setMostrarModal(true)} > Agregar Producto</Button>
+       </div>
+
+       <ModalProducto
+          mostrar={MostrarModal}
+          onCerrar={() => setMostrarModal(false)}
+          onGuardar={agregarProducto}
+        />
       {cargando && <p>Cargando...</p>}
       {error && <p>{error}</p>}
       
