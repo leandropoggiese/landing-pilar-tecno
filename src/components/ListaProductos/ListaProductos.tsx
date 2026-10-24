@@ -108,7 +108,7 @@ const ListaProductos = () => {
                 <Card.Body>
                   <Card.Title>{producto.nombre}</Card.Title>
                   <Card.Subtitle className = "text-secondary mb-2">{producto.categoria}</Card.Subtitle>
-                  <Badge bg= "info">{producto.precio}</Badge>
+                  <Badge bg= "info">${producto.precio}</Badge>
                   <div className="mt-3 d-flex gap-2">
                     <Button size= "sm" 
                     variant="outline-primary" 
