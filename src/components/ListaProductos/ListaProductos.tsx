@@ -1,6 +1,6 @@
 import {useState, useEffect} from "react";
 import {Card , Row , Col, Badge, Button} from "react-bootstrap";
-import {crearProducto, obtenerProductos} from "../../services/productoService";
+import {crearProducto, obtenerProductos, actualizarProducto,} from "../../services/productoService";
 import type {Producto, ProductoFormulario} from "../../types/producto";
 import ModalProducto from "../ModalProducto/ModalProducto";
 
@@ -9,6 +9,7 @@ const ListaProductos = () => {
     const [cargando, setCargando] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [MostrarModal, setMostrarModal] = useState(false);
+    const [productoEditado, setProductoEditado] = useState<Producto | null>(null);
 
     useEffect(() => {
         obtenerProductos()
@@ -17,36 +18,58 @@ const ListaProductos = () => {
         .finally (() => setCargando(false));
     }, []);
 
-    const agregarProducto = async (datos: ProductoFormulario) =>{
+  const abrirAgregar = () => { //se abre modal vacio porque estamos agregando/creando un producto
+    setProductoEditado(null);
+    setMostrarModal(true);
+  };
+  const abrirEditar = (producto: Producto) => {
+    //se abre el modal con el producto que se quiere editar
+    setProductoEditado(producto);
+    setMostrarModal(true);
+  };
+
+  const guardarProducto = async (datos: ProductoFormulario) => {
+    if (productoEditado) {
+      const actualizado = await actualizarProducto(productoEditado._id, datos);
+      setDatos((anteriores) => anteriores.map((producto) => producto._id === actualizado._id? actualizado : producto,),
+    );
+    } else{
       const nuevo = await crearProducto(datos);
       setDatos((anteriores) => [...anteriores, nuevo]);
-      setMostrarModal(false)
-    };
+    }
+  };
 
     return (
    <>
       <div className="d-flex justify-content-between align-items-center mb-3">
        <h2 className="mb-3">Productos</h2>
-       <Button onClick={() => setMostrarModal(true)} > Agregar Producto</Button>
+       <Button onClick={abrirAgregar} > Agregar Producto</Button>
        </div>
 
        <ModalProducto
           mostrar={MostrarModal}
+          producto={productoEditado}
           onCerrar={() => setMostrarModal(false)}
-          onGuardar={agregarProducto}
+          onGuardar={guardarProducto}
         />
       {cargando && <p>Cargando...</p>}
       {error && <p>{error}</p>}
       
       {!cargando && !error && (
         <Row>
-          {datos.map((Producto) => (
-            <Col md={4} key ={Producto._id}>
+          {datos.map((producto) => (
+            <Col md={4} key ={producto._id}>
               <Card className="mb-3">
                 <Card.Body>
-                  <Card.Title>{Producto.nombre}</Card.Title>
-                  <Card.Subtitle className = "text-secondary mb-2">{Producto.categoria}</Card.Subtitle>
-                  <Badge bg= "info">{Producto.precio}</Badge>
+                  <Card.Title>{producto.nombre}</Card.Title>
+                  <Card.Subtitle className = "text-secondary mb-2">{producto.categoria}</Card.Subtitle>
+                  <Badge bg= "info">{producto.precio}</Badge>
+                  <div className="mt-3 d-flex gap-2">
+                    <Button size= "sm" variant="outline-primary" onClick={() => abrirEditar(producto)}
+                    >
+                      Editar
+                    </Button>
+                    </div>
                 </Card.Body>
               </Card>
             </Col>
@@ -55,7 +78,5 @@ const ListaProductos = () => {
  )}
  </>
  );
-};
-
-
+}
 export default ListaProductos;

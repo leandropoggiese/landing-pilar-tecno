@@ -1,10 +1,11 @@
 import {Modal, Button, Form} from "react-bootstrap";
 import {useFormik} from "formik";
 import * as Yup from "yup";
-import type {  ProductoFormulario} from "../../types/producto";
+import type { Producto, ProductoFormulario} from "../../types/producto";
 
 type Props = {
     mostrar: boolean;
+    producto?: Producto | null;
     onCerrar: () => void;
     onGuardar: (datos: ProductoFormulario) => Promise<void>;
 };
@@ -16,7 +17,7 @@ const esquema = Yup.object({
     categoria: Yup.string().trim().required("La categoría es obligatoria"),
 });
 
-const valoresIniciales: ProductoFormulario = {
+const valoresInicialesVacios: ProductoFormulario = {
     nombre: "",
     descripcion: "",
     precio: 0,
@@ -25,9 +26,16 @@ const valoresIniciales: ProductoFormulario = {
 };
 
 
-const ModalProducto = ({mostrar, onCerrar, onGuardar}: Props) => {
+const ModalProducto = ({mostrar, producto, onCerrar, onGuardar}: Props) => {
     const formik = useFormik<ProductoFormulario>({
-        initialValues: valoresIniciales,
+        initialValues: producto ? {
+          nombre: producto.nombre,
+          descripcion: producto.descripcion,
+          categoria: producto.categoria,
+          precio: producto.precio,
+          cantidad: producto.cantidad,
+        } : valoresInicialesVacios,
+        enableReinitialize: true,
         validationSchema: esquema,
         onSubmit: async (valores, {resetForm, setStatus}) => {
             try {
