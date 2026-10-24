@@ -93,7 +93,7 @@ const ModalProducto = ({mostrar, producto, onCerrar, onGuardar}: Props) => {
   <Modal show={mostrar} onHide={cerrar} centered>
     <Form onSubmit={formik.handleSubmit} noValidate>
       <Modal.Header closeButton>
-        <Modal.Title>Agregar Producto</Modal.Title>
+        <Modal.Title>{producto ? "Editar Producto" : "Agregar Producto"}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
           {campoTexto("nombre", "Nombre")}
