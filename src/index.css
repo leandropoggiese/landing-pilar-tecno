@@ -30,3 +30,35 @@ h3 {
   font-weight: 700;
   color: var(--pt-dark);
 }
+
+/* Fondo temático Sin TACC (Amarillo, Rojo y Blanco bien visible) */
+.pagina-productos-sintacc {
+  background: linear-gradient(145deg, #fcf0be 0%, #fff9e6 50%, #ffebee 100%);
+  min-height: calc(100vh - 56px);
+  flex: 1;
+  position: relative;
+}
+
+.pagina-productos-sintacc::before {
+  content: "";
+  display: block;
+  height: 6px;
+  background: linear-gradient(90deg, #d32f2f 0%, #fbc02d 50%, #d32f2f 100%);
+  width: 100%;
+}
+
+/* Botón Editar: inicia en blanco y se pinta de amarillo al pasar el mouse */
+.btn-outline-warning {
+  color: #212529 !important;
+  border-color: #ffc107 !important;
+  background-color: #ffffff !important;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-outline-warning:hover,
+.btn-outline-warning:focus,
+.btn-outline-warning:active {
+  background-color: #ffc107 !important;
+  color: #000000 !important;
+  border-color: #ffc107 !important;
+}
