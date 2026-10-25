@@ -5,9 +5,10 @@ export type Producto = {
   precio: number;
   cantidad: number;
   categoria: string;
+  imagen?: string;
 };
 
 export type ProductoFormulario = Pick<
   Producto,
-  "nombre" | "descripcion" | "precio" | "cantidad" | "categoria"
+  "nombre" | "descripcion" | "precio" | "cantidad" | "categoria" | "imagen"
 >;
