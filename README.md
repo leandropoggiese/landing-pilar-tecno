@@ -1,5 +1,6 @@
 # Landing Pilar Tecno
-
+![alt text](image.png)
+![alt text](image-1.png)
 Frontend para consultar y administrar productos del inventario, desarrollado con React, TypeScript y Vite.
 
 ## Tecnologías y librerías utilizadas
@@ -33,7 +34,6 @@ La aplicación consume la API de inventario mediante Axios. La URL base se confi
 - `GET /api/productos/bajo-stock/:limite`: consultar productos con bajo stock (el límite predeterminado en el frontend es `5`).
 - `GET /api/productos/categoria/:categoria`: filtrar productos por categoría.
 
-Para cambiar la dirección de la API, modifica `VITE_API_URL` en `.env`. No guardes credenciales de MongoDB ni otros secretos en variables `VITE_*`: Vite las expone en el código enviado al navegador. Las credenciales de la base de datos deben configurarse solo en el backend.
 
 ## Requisitos
 
@@ -48,9 +48,6 @@ Desde la carpeta del frontend:
 npm install
 npm run dev
 ```
-
-El proyecto incluye un `.env` de desarrollo con la URL de la API de Render. Si necesitas crearlo de nuevo, copia `.env.example` como `.env`. Abre la URL local que muestra Vite en la terminal (normalmente `http://localhost:5173`). Si cambias `.env` mientras Vite está activo, reinicia el servidor de desarrollo.
-
 ## Otros comandos
 
 ```bash
