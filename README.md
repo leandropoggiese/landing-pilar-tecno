@@ -24,7 +24,7 @@ Frontend para consultar y administrar productos del inventario, desarrollado con
 
 ## API utilizada
 
-La aplicación consume la API de inventario en `http://localhost:3000/api/productos` mediante Axios. Utiliza estos endpoints:
+La aplicación consume la API de inventario mediante Axios. La URL base se configura con la variable `VITE_API_URL` en el archivo `.env`; actualmente se utiliza `https://api-inventario-stock.onrender.com/api/productos`. Utiliza estos endpoints:
 
 - `GET /api/productos`: listar productos.
 - `POST /api/productos`: crear un producto.
@@ -33,12 +33,12 @@ La aplicación consume la API de inventario en `http://localhost:3000/api/produc
 - `GET /api/productos/bajo-stock/:limite`: consultar productos con bajo stock (el límite predeterminado en el frontend es `5`).
 - `GET /api/productos/categoria/:categoria`: filtrar productos por categoría.
 
-La URL de la API está definida en `src/services/productoService.ts`. Para usar otra dirección, actualiza allí la constante `BASE_URL`.
+Para cambiar la dirección de la API, modifica `VITE_API_URL` en `.env`. No guardes credenciales de MongoDB ni otros secretos en variables `VITE_*`: Vite las expone en el código enviado al navegador. Las credenciales de la base de datos deben configurarse solo en el backend.
 
 ## Requisitos
 
 - Node.js y npm.
-- La API de inventario en ejecución en `http://localhost:3000` y conectada a MongoDB.
+- Acceso a la API de inventario configurada en `VITE_API_URL`.
 
 ## Ejecutar en local
 
@@ -49,7 +49,7 @@ npm install
 npm run dev
 ```
 
-Abre la URL local que muestra Vite en la terminal (normalmente `http://localhost:5173`). Inicia también el backend para que las operaciones de productos funcionen.
+El proyecto incluye un `.env` de desarrollo con la URL de la API de Render. Si necesitas crearlo de nuevo, copia `.env.example` como `.env`. Abre la URL local que muestra Vite en la terminal (normalmente `http://localhost:5173`). Si cambias `.env` mientras Vite está activo, reinicia el servidor de desarrollo.
 
 ## Otros comandos
 
